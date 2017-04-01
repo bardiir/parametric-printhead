@@ -5,7 +5,7 @@ heatbrake_sunk_at_mount = 3; //TBD
 
 fan_width = 40 + 0.2;
 fan_screw_distance = 32.3;
-fan_screw_diameter = 2.5;
+fan_screw_diameter = 3.2;
 fan_distance_from_center = 7;
 fan_screw_length = 10;
 fan_lip_height = 5;
@@ -13,14 +13,14 @@ fan_lip_height = 5;
 printhead_height = 45.1;
 
 clampscrew_distance_from_heatbrake_end = 43.2;
-clampscrew_diameter = 2.8;
+clampscrew_diameter = 3 + 0.5 ;
 clampscrew_distance_between = 10.5;
 
 air_channel_width = 8;
 air_channel_from_heatbrake_end = 12.4;
 air_channel_backtrack = 5;
 
-wall_thickness = 1.2;
+wall_thickness = 1.8;
 
 hole_fn = 30;
 
@@ -33,7 +33,7 @@ exhaust_bed_clearance = 2;
 exhaust_nozzle_clearance = 4;
 exhaust_height = 5;
 
-filament_diameter = 1.75 + 0.2;
+filament_diameter = 1.75 + 0.5;
 filament_guide_height = 2;
 
 filament_tube_diameter = 4.2 + 0.2;
