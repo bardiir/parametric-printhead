@@ -1,3 +1,12 @@
+/// --- RENDER SELECTION
+
+render_fan_duct = 1;
+render_exhaust = 1;
+render_top_plate = 1;
+render_supports = 0;
+
+/// --- CALIBRATION VARIABLES
+
 heatbrake_width = 45.8 + 0.5;
 heatbrake_height = 12.9 + 0.2;
 heatbrake_depth = 15.8 + 0.2;
@@ -644,17 +653,25 @@ module print_head_support()
     polygon([[0,0],[tps_min_x,tps_max_y],[tps_max_x,tps_max_y],[tps_max_x,0]],[[0,1,2,3]]);
 }
 
-
-//cut_out_for_mount_point();
-//heat_brake();
-
-//print_head();
-//print_part_plate();
-print_part_fan_duct();
-//print_part_exhaust();
-
-//ethernet_box();
-
-//air_channel();
-//air_channel_connector();
-//exhaust_ring();
+union() 
+{
+    if(render_fan_duct == 1)
+    {
+        print_part_fan_duct();
+    }
+    
+    if(render_exhaust == 1)
+    {
+        print_part_exhaust();
+    }
+    
+    if(render_top_plate == 1)
+    {
+        print_part_plate();
+    }
+    
+    if(render_supports == 1)
+    {
+        print_head_support();
+    }
+}
