@@ -1,4 +1,4 @@
-heatbrake_width = 45.8;
+heatbrake_width = 45.8 + 0.5;
 heatbrake_height = 12.9 + 0.2;
 heatbrake_depth = 15.8 + 0.2;
 heatbrake_sunk_at_mount = 3; //TBD
@@ -16,7 +16,7 @@ clampscrew_distance_from_heatbrake_end = 43.2;
 clampscrew_diameter = 3 + 0.5 ;
 clampscrew_distance_between = 10.5;
 
-air_channel_width = 8;
+air_channel_width = 7;
 air_channel_from_heatbrake_end = 12.4;
 air_channel_backtrack = 5;
 
@@ -73,9 +73,9 @@ module ethernet_box()
             union()
             {
                 //cable box
-                translate([0,0,-printhead_height])
-                resize([box_width,box_depth,printhead_height])
-                cube();
+                //translate([0,0,-printhead_height])
+                //resize([box_width,box_depth,printhead_height])
+                //cube();
                 
                 //ethernet mounts
                 resize([box_width, box_depth, box_height])
@@ -535,8 +535,8 @@ module print_head_support()
     cube();
     
     //support for cablebox
-    translate([-support_clearance,-box_depth-((fan_width-heatbrake_depth)/2)-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
-    resize([box_width+fan_distance_from_center-wall_thickness+support_clearance, box_depth, nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance+heatbrake_sunk_at_mount])
+    translate([fan_distance_from_center-wall_thickness,-box_depth-((fan_width-heatbrake_depth)/2)-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    resize([box_width, box_depth, nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance+heatbrake_sunk_at_mount])
     cube();
     
     //top plate support
