@@ -1,0 +1,23 @@
+Connector 1 (White)
+-------------------
+Brown    | Heating Capsule +
+Brown-W  | Heating Capsule -
+Blue     | Stepper Motor Coil 1 +
+Blue-W   | Stepper Motor Coil 1 -
+Green    | Cooling Fan Extruder Heatsink +
+Green-W  | Cooling Fan Extruder Heatsink -
+Yellow   | MAX6675 SO (7)
+Yellow-W | MAX6675 SCK (5)
+Shield   | GND
+
+Connector 2 (Red)
+-----------------
+Brown    | Heating Capsule +
+Brown-W  | Heating Capsule -
+Blue     | Stepper Motor Coil 2 +
+Blue-W   | Stepper Motor Coil 2 -
+Green    | Cooling Fan Air Channel +
+Green-W  | Cooling Fan Air Channel -
+Yellow   | MAX6675 CS (6)
+Yellow-W | MAX6675 VCC (4)
+Shield   | GND
