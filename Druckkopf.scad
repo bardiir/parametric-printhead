@@ -525,18 +525,18 @@ module print_head_support()
     cube();
     
     //overhang for mount sink
-    translate([heatbrake_width-air_channel_from_heatbrake_end,-air_channel_width-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
-    resize([air_channel_from_heatbrake_end-support_clearance,air_channel_width*2+heatbrake_depth+wall_thickness*2,nozzle_below_heatbrake+heatbrake_sunk_at_mount-exhaust_bed_clearance-support_clearance])
+    translate([heatbrake_width-air_channel_from_heatbrake_end,-(fan_width-heatbrake_depth)/2-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    resize([air_channel_from_heatbrake_end-support_clearance,fan_width/2+heatbrake_depth/2+air_channel_width+wall_thickness*2,nozzle_below_heatbrake+heatbrake_sunk_at_mount-exhaust_bed_clearance-support_clearance])
     cube();
     
     //overhang for end wall
-    translate([heatbrake_width,-air_channel_width-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
-    resize([wall_thickness,air_channel_width*2+heatbrake_depth+wall_thickness*2,nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance])
+    translate([heatbrake_width-support_clearance,-(fan_width-heatbrake_depth)/2-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    resize([wall_thickness+support_clearance,fan_width/2+heatbrake_depth/2+air_channel_width+wall_thickness*2,nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance])
     cube();
     
     //support for cablebox
-    translate([fan_distance_from_center-wall_thickness,-box_depth-((fan_width-heatbrake_depth)/2)-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
-    resize([box_width, box_depth, nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance+heatbrake_sunk_at_mount])
+    translate([-support_clearance,-box_depth-((fan_width-heatbrake_depth)/2)-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    resize([box_width+fan_distance_from_center-wall_thickness+support_clearance, box_depth, nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance+heatbrake_sunk_at_mount])
     cube();
     
     //top plate support
