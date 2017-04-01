@@ -5,14 +5,14 @@ heatbrake_sunk_at_mount = 3; //TBD
 
 fan_width = 40 + 0.2;
 fan_screw_distance = 32.3;
-fan_screw_diameter = 3.2;
+fan_screw_diameter = 2.9;
 fan_distance_from_center = 7;
 fan_screw_length = 10;
 fan_lip_height = 5;
 
 printhead_height = 45.1;
 
-clampscrew_distance_from_heatbrake_end = 43.2;
+clampscrew_distance_from_heatbrake_end = 44.8;
 clampscrew_diameter = 3 + 0.5 ;
 clampscrew_distance_between = 10.5;
 
@@ -54,6 +54,8 @@ stepper_motor_connector_width = 16.3 + 0.5;
 
 top_plate_height = 5;
 
+part_connection_screw_diameter = 2.9;
+
 /// --- CALCULATED
 
 fan_screw_distance_from_wall = (fan_width - fan_screw_distance)/2;
@@ -62,6 +64,19 @@ fan_screw_block_size = fan_screw_diameter+fan_screw_distance_from_wall;
 box_depth = ethernet_socket_depth + wall_thickness*2;
 box_width = ethernet_socket_width*2 + wall_thickness*3;
 box_height = ethernet_socket_height + wall_thickness;
+
+module part_connector_box()
+{
+    connector_box_size = part_connection_screw_diameter+wall_thickness*2;
+    difference()
+    {
+        resize([connector_box_size,connector_box_size,wall_thickness*2])
+        cube();
+        
+        translate([wall_thickness+part_connection_screw_diameter/2,wall_thickness+part_connection_screw_diameter/2,0])
+        cylinder($fn=hole_fn,d=part_connection_screw_diameter,h=wall_thickness*2);
+    }
+}
 
 module ethernet_box()
 {
@@ -230,14 +245,16 @@ module air_channel_connector()
 
 module air_channel_cutout()
 {
-    translate([0,0,-nozzle_below_heatbrake+exhaust_bed_clearance+wall_thickness])
-    linear_extrude(height=exhaust_height-2*wall_thickness)
+    translate([0,0,-nozzle_below_heatbrake+exhaust_bed_clearance+wall_thickness/2])
+    linear_extrude(height=exhaust_height-1.5*wall_thickness)
     polygon([
         [air_channel_backtrack,-air_channel_width],
         [-(nozzle_distance_from_heatbrake_end - heatbrake_width - ((air_channel_width*2)+heatbrake_depth)/2),-(heatbrake_depth - nozzle_distance_from_heatbrake_back)/2],
         [-(nozzle_distance_from_heatbrake_end - heatbrake_width - ((air_channel_width*2)+heatbrake_depth)/2),air_channel_width+heatbrake_depth+(heatbrake_depth-nozzle_distance_from_heatbrake_back)/2-wall_thickness*2],
        [air_channel_backtrack,air_channel_width+heatbrake_depth]
     ],[[0,1,2,3]]);
+    
+    
 }
 
 module air_channel()
@@ -246,6 +263,8 @@ module air_channel()
     max_y = heatbrake_width-air_channel_from_heatbrake_end-wall_thickness - air_channel_backtrack;
     //max_y = nozzle_distance_from_heatbrake_end - air_channel_from_heatbrake_end;
     
+    union()
+    {
     translate([(heatbrake_width-air_channel_from_heatbrake_end-wall_thickness),-(air_channel_width+wall_thickness),0])
     rotate([0,90,90])
     difference() { 
@@ -265,12 +284,15 @@ module air_channel()
         polygon([
             [0,wall_thickness],
             [(max_x/2)-wall_thickness,wall_thickness],
-            [max_x-wall_thickness,(max_y/4)+wall_thickness],
-            [max_x-wall_thickness,max_y],
+            [max_x-wall_thickness/2,(max_y/4)+wall_thickness],
+            [max_x-wall_thickness/2,max_y],
             [max_x-exhaust_height+wall_thickness,max_y],
             [max_x-exhaust_height+wall_thickness,max_y-wall_thickness],
             [0,heatbrake_width-air_channel_from_heatbrake_end-wall_thickness*2-fan_distance_from_center]
         ],[[0,1,2,3,4,5,6]]);
+    }
+    translate([0,0,-wall_thickness*2])
+    fan_connection();
     }
 }
 
@@ -293,11 +315,11 @@ module exhaust_ring()
         
             cylinder($fn=hole_fn,d=(exhaust_nozzle_clearance*2)+nozzle_diameter,h=exhaust_height);
         
-            translate([0,0,wall_thickness])
-            cylinder($fn=hole_fn,d=(air_channel_width*2)+heatbrake_depth,h=exhaust_height-(wall_thickness*2));
+            translate([0,0,wall_thickness/2])
+            cylinder($fn=hole_fn,d=(air_channel_width*2)+heatbrake_depth,h=exhaust_height-(wall_thickness*1.5));
         
-            translate([0,0,wall_thickness])
-            resize([((air_channel_width*3)+heatbrake_depth)/2,(air_channel_width*2)+heatbrake_depth-(wall_thickness*2),exhaust_height-wall_thickness*2])
+            translate([0,0,wall_thickness/2])
+            resize([((air_channel_width*3)+heatbrake_depth)/2,(air_channel_width*2)+heatbrake_depth-(wall_thickness*2),exhaust_height-wall_thickness*1.5])
             translate([0,-0.5,0])
             cube();
             
@@ -325,22 +347,22 @@ module exhaust_spacers()
 {
     move_radius = exhaust_nozzle_clearance+nozzle_diameter/2;
     
-    translate([-move_radius-wall_thickness,0,wall_thickness])
+    translate([-move_radius-wall_thickness,0,wall_thickness*0.5])
     exhaust_spacer();
         
-    translate([move_radius,0,wall_thickness])
+    translate([move_radius,0,wall_thickness*0.5])
     exhaust_spacer();
         
-    translate([0,-move_radius-wall_thickness,wall_thickness])
+    translate([0,-move_radius-wall_thickness,wall_thickness*0.5])
     exhaust_spacer();
         
-    translate([0,move_radius,wall_thickness])
+    translate([0,move_radius,wall_thickness*0.5])
     exhaust_spacer();
 }
 
 module exhaust_spacer()
 {
-    resize([1,1,exhaust_height-wall_thickness*2])
+    resize([1,1,exhaust_height-wall_thickness*1.5])
     cube();
 }
 
@@ -370,7 +392,11 @@ module fan_mount_inner()
     [6,7,3,2],  // back
     [7,4,0,3]]; // left
   
-    polyhedron( points, faces );
+    difference()
+    {
+        polyhedron( points, faces );
+        fan_connection();
+    }
 }
 
 module fan_mount()
@@ -396,6 +422,21 @@ module fan_mount()
     polyhedron( points, faces );
 }
 
+module fan_connection()
+{
+    translate([fan_distance_from_center-0.1,-air_channel_width-0.1,0])
+    part_connector_box();
+        
+    translate([fan_distance_from_center-0.1,0.1+heatbrake_depth+air_channel_width-(part_connection_screw_diameter+wall_thickness*2),0])
+    part_connector_box();
+        
+    translate([0.1+(heatbrake_width-air_channel_from_heatbrake_end)-(part_connection_screw_diameter+wall_thickness*4),-air_channel_width-0.1,0])
+    part_connector_box();
+        
+    translate([(0.1+heatbrake_width-air_channel_from_heatbrake_end)-(part_connection_screw_diameter+wall_thickness*4),0.1+heatbrake_depth+air_channel_width-(part_connection_screw_diameter+wall_thickness*2),-0.01])
+    part_connector_box();
+}
+
 module fan_lip()
 {
     translate([fan_distance_from_center-wall_thickness,-(((fan_width-heatbrake_depth)/2)+wall_thickness),printhead_height-0.1])
@@ -406,6 +447,10 @@ module fan_lip()
         
         translate([wall_thickness, wall_thickness,0])
         resize([fan_width,fan_width,fan_lip_height])
+        cube();
+        
+        translate([fan_width/2-2.5+wall_thickness,0,0])
+        resize([5,wall_thickness,fan_lip_height])
         cube();
     }
 }
@@ -490,6 +535,7 @@ module print_head()
             }
             air_channel_lip();
             fan_screw_holes();
+            //fan_connection();
             fan_lip();
             air_channel();
             air_channel_connector();
@@ -500,6 +546,53 @@ module print_head()
         clampscrew_holes();
         cut_out_for_mount_point();
         heat_brake();
+    }
+}
+
+module print_part_plate()
+{
+    difference()
+    {
+        union()
+        {
+            top_plate();
+            ethernet_box();
+        }
+        clampscrew_holes();
+    }
+}
+
+module print_part_fan_duct()
+{
+    difference()
+    {
+        union()
+        {
+            difference()
+            {
+                fan_mount();
+                fan_mount_inner();
+            }
+            air_channel_lip();
+            fan_screw_holes();
+            fan_lip();
+        }
+        clampscrew_holes();
+        cut_out_for_mount_point();
+        heat_brake();
+    }
+}
+
+module print_part_exhaust()
+{
+    difference()
+    {
+        union()
+        {
+            air_channel();
+            air_channel_connector();
+            exhaust_ring();
+        }
     }
 }
 
@@ -554,11 +647,11 @@ module print_head_support()
 
 //cut_out_for_mount_point();
 //heat_brake();
-union()
-{
-print_head();
-print_head_support();
-}
+
+//print_head();
+//print_part_plate();
+print_part_fan_duct();
+//print_part_exhaust();
 
 //ethernet_box();
 
