@@ -45,6 +45,7 @@ ethernet_socket_width = 19.3;
 ethernet_socket_depth = 19.8;
 ethernet_socket_height = 29.3;
 ethernet_socket_cable_d = 10.2;
+ethernet_socket_over_printhead = 10;
 
 stepper_motor_depth = 34;
 stepper_motor_width = 42.5;
@@ -57,6 +58,73 @@ top_plate_height = 5;
 
 fan_screw_distance_from_wall = (fan_width - fan_screw_distance)/2;
 fan_screw_block_size = fan_screw_diameter+fan_screw_distance_from_wall;
+
+box_depth = ethernet_socket_depth + wall_thickness*2;
+box_width = ethernet_socket_width*2 + wall_thickness*3;
+box_height = ethernet_socket_height + wall_thickness;
+
+module ethernet_box()
+{
+    translate([fan_distance_from_center-wall_thickness,-(((fan_width-heatbrake_depth)/2)+wall_thickness+box_depth),     printhead_height])
+    union()
+    {
+        difference()
+        {
+            union()
+            {
+                //cable box
+                translate([0,0,-printhead_height])
+                resize([box_width,box_depth,printhead_height])
+                cube();
+                
+                //ethernet mounts
+                resize([box_width, box_depth, box_height])
+                cube();
+            }
+            
+            //   rounded ceiling
+            translate([box_width/2,box_depth-wall_thickness,-box_width/2])
+            rotate([90,0,0])
+            cylinder($fn=hole_fn, d=box_width-wall_thickness*2, h=box_depth);
+            
+            //inner cutout box
+            translate([wall_thickness,-wall_thickness,-printhead_height+heatbrake_sunk_at_mount+wall_thickness])
+            resize([box_width-wall_thickness*2,box_depth,printhead_height/2-heatbrake_sunk_at_mount])
+            cube();
+            
+            //bottom cut box
+            translate([0,0,-printhead_height])
+            resize([box_width,box_depth+(((fan_width-heatbrake_depth)/2)),heatbrake_sunk_at_mount])
+            cube();
+        
+            //ethernet cable cutout
+            translate([wall_thickness,wall_thickness,wall_thickness])
+            ethernet_cutout();
+        
+            //ethernet cable cutout
+            translate([wall_thickness*2+ethernet_socket_width,wall_thickness,wall_thickness])
+            ethernet_cutout();
+        }
+        
+        translate([0,box_depth,box_height])
+        resize([(stepper_motor_width-stepper_motor_connector_width)/2+fan_distance_from_center-wall_thickness,box_depth-wall_thickness,box_height])
+        rotate([-90,0,180])
+        linear_extrude(h=box_depth)
+        polygon([[0,0],[0,1],[1,1]],[[0,1,2]]);
+    }
+}
+
+module ethernet_cutout()
+{
+    union()
+    {
+        translate([ethernet_socket_width/2,ethernet_socket_depth/2,-printhead_height/2+0.01])
+        cylinder($fn=hole_fn,d=ethernet_socket_cable_d,h=printhead_height/2);
+        
+        resize([ethernet_socket_width, ethernet_socket_depth, ethernet_socket_height+0.01])
+        cube();
+    }
+}
 
 module top_plate()
 {
@@ -427,6 +495,7 @@ module print_head()
             air_channel_connector();
             exhaust_ring();
             top_plate();
+            ethernet_box();
         }
         clampscrew_holes();
         cut_out_for_mount_point();
@@ -464,6 +533,22 @@ module print_head_support()
     translate([heatbrake_width,-air_channel_width-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
     resize([wall_thickness,air_channel_width*2+heatbrake_depth+wall_thickness*2,nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance])
     cube();
+    
+    //support for cablebox
+    translate([fan_distance_from_center-wall_thickness,-box_depth-((fan_width-heatbrake_depth)/2)-wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    resize([box_width, box_depth, nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance+heatbrake_sunk_at_mount])
+    cube();
+    
+    //top plate support
+    tps_min_x = ((fan_width-heatbrake_depth)/2)+heatbrake_depth;
+    tps_max_x = heatbrake_depth+stepper_motor_depth;
+    tps_max_y = printhead_height+nozzle_below_heatbrake-exhaust_bed_clearance-support_clearance;
+    tps_z = fan_distance_from_center+nozzle_distance_from_heatbrake_end-heatbrake_width+filament_tube_diameter+stepper_motor_connector_width;
+
+    translate([-tps_z-support_clearance,heatbrake_depth,printhead_height-support_clearance])
+    rotate([-90,0,-90])
+    linear_extrude(height=tps_z)
+    polygon([[0,0],[tps_min_x,tps_max_y],[tps_max_x,tps_max_y],[tps_max_x,0]],[[0,1,2,3]]);
 }
 
 
@@ -474,6 +559,8 @@ union()
 print_head();
 print_head_support();
 }
+
+//ethernet_box();
 
 //air_channel();
 //air_channel_connector();
