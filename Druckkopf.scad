@@ -1,9 +1,10 @@
 /// --- RENDER SELECTION
 
-render_fan_duct = 1;
-render_exhaust = 1;
-render_top_plate = 1;
+render_fan_duct = 0;
+render_exhaust = 0;
+render_top_plate = 0;
 render_supports = 0;
+render_printer_connectorplate = 1;
 
 /// --- CALIBRATION VARIABLES
 
@@ -42,8 +43,8 @@ exhaust_bed_clearance = 2;
 exhaust_nozzle_clearance = 4;
 exhaust_height = 5;
 
-filament_diameter = 1.75 + 0.5;
-filament_guide_height = 2;
+filament_diameter = 3.5 + 0.2;
+filament_guide_height = 5;
 
 filament_tube_diameter = 4.2 + 0.2;
 filament_tube_guide_height = 15;
@@ -64,6 +65,9 @@ stepper_motor_connector_width = 16.3 + 0.5;
 top_plate_height = 5;
 
 part_connection_screw_diameter = 2.9;
+
+printer_connector_spacing = 20;
+printer_connector_screw_spacing = 19.5;
 
 /// --- CALCULATED
 
@@ -142,6 +146,10 @@ module ethernet_cutout()
 {
     union()
     {
+        translate([ethernet_socket_width/2-ethernet_socket_cable_d/2,-wall_thickness-0.01,-printhead_height/2+0.01])
+        resize([ethernet_socket_cable_d,ethernet_socket_depth/2+wall_thickness,ethernet_socket_height+printhead_height/2])
+        cube();
+        
         translate([ethernet_socket_width/2,ethernet_socket_depth/2,-printhead_height/2+0.01])
         cylinder($fn=hole_fn,d=ethernet_socket_cable_d,h=printhead_height/2);
         
@@ -605,6 +613,51 @@ module print_part_exhaust()
     }
 }
 
+module printer_connector_plate()
+{
+    
+    printer_connector_plate_thickness = 10;
+    
+    union()
+    {
+        difference()
+        {
+            resize([ethernet_socket_width+wall_thickness*2,ethernet_socket_depth+wall_thickness*2,ethernet_socket_height+wall_thickness])
+            cube();
+            
+            translate([wall_thickness,wall_thickness,wall_thickness])
+            ethernet_cutout();
+        }
+        
+        translate([ethernet_socket_width+printer_connector_spacing,0,0])
+        difference()
+        {
+            resize([ethernet_socket_width+wall_thickness*2,ethernet_socket_depth+wall_thickness*2,ethernet_socket_height+wall_thickness])
+            cube();
+            
+            translate([wall_thickness,wall_thickness,wall_thickness])
+            ethernet_cutout();
+        }
+        
+        translate([0,ethernet_socket_depth+wall_thickness*2,0])
+        difference()
+        {
+            resize([ethernet_socket_width*2+wall_thickness*2+printer_connector_spacing,printer_connector_plate_thickness,ethernet_socket_height+wall_thickness])
+            cube();
+            
+            translate([ethernet_socket_width+printer_connector_spacing/2+wall_thickness,printer_connector_plate_thickness,ethernet_socket_height/2-printer_connector_screw_spacing/2])
+            rotate([90,0,0])
+            cylinder($fn=hole_fn,d=clampscrew_diameter,h=printer_connector_plate_thickness);
+            
+            translate([ethernet_socket_width+printer_connector_spacing/2+wall_thickness,printer_connector_plate_thickness,ethernet_socket_height/2+printer_connector_screw_spacing/2])
+            rotate([90,0,0])
+            cylinder($fn=hole_fn,d=clampscrew_diameter,h=printer_connector_plate_thickness);
+        }
+    }
+}
+
+
+
 module clampscrew_holes()
 {
     translate([heatbrake_width-clampscrew_distance_from_heatbrake_end,(heatbrake_depth/2)-(clampscrew_distance_between/2),0])
@@ -673,5 +726,10 @@ union()
     if(render_supports == 1)
     {
         print_head_support();
+    }
+    
+    if(render_printer_connectorplate == 1)
+    {
+        printer_connector_plate();
     }
 }
