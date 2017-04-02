@@ -653,6 +653,16 @@ module printer_connector_plate()
             rotate([90,0,0])
             cylinder($fn=hole_fn,d=clampscrew_diameter,h=printer_connector_plate_thickness);
         }
+        
+        difference()
+        {
+            translate([-filament_diameter-wall_thickness*6,0,0])
+            resize([filament_diameter+wall_thickness*6,ethernet_socket_depth+wall_thickness*2+printer_connector_plate_thickness,wall_thickness*3])
+            cube();
+            
+            translate([-(filament_diameter+wall_thickness*6)/2,(ethernet_socket_depth+wall_thickness*2)/2,0])
+            cylinder($fn=hole_fn,d=filament_diameter,h=wall_thickness*3);
+        }
     }
 }
 
