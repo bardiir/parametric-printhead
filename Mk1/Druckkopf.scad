@@ -35,7 +35,7 @@ wall_thickness = 1.8;
 hole_fn = 30;
 
 nozzle_below_heatbrake = 25;
-nozzle_distance_from_heatbrake_end = 59.5 - 3;
+nozzle_distance_from_heatbrake_end = 59.5 + 3; // Why? 59.5mm Measurement but Testprint is 3mm off. 
 nozzle_diameter = 7;
 nozzle_distance_from_heatbrake_back = 9.5;
 
