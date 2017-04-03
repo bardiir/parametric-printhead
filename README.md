@@ -16,3 +16,4 @@ Currently I want to change the following, this list is subject to change itself 
 - Custom PCB, using the patch extensions was just a way to quickly solve the issue, ideally I want to have a routed and soldered PCB that has ethernet sockets and screw terminals for all the cables coming in, both at the printhead and printer side
 - Have the Thermocouple read at the printhead not back at the mainboard, shield SPI bus from EMI noise
 - Have an expansion modified for annnealing the part. Ideally this part, as it is in direct contact with hot elements of the printhead should be annealed to increase it's temperature stability, this however does cause some warping (see this video: https://www.youtube.com/watch?v=CZX8eHC7fws&t=141s), there should be a modifier to take care of this
+- Use nuts to screw fan duct and exhaust together
