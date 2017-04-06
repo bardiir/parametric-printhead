@@ -14,6 +14,7 @@ True! It does change the temperature (in my case it seems to be around 10°C les
 Currently I want to change the following, this list is subject to change itself however, I'll probably plan some more changes if I see any issues during the tests:
 - Better air exhaust design, this was just a first proof of conecpt to see if everything works, the air outlet currently mainly cools the nozzle not the extruded filament, this is bad
 - Custom PCB, using the patch extensions was just a way to quickly solve the issue, ideally I want to have a routed and soldered PCB that has ethernet sockets and screw terminals for all the cables coming in, both at the printhead and printer side
+- Add some fuses, polyfuses for the heater wires going through ethernet so if one of the connections gets cut it doesn't result in an overload on the remaining one as well as an additional burn fuse on the PCB to prevent the heater current to leave safe levels alltogether
 - Have the Thermocouple read at the printhead not back at the mainboard, shield SPI bus from EMI noise
 - Have an expansion modified for annnealing the part. Ideally this part, as it is in direct contact with hot elements of the printhead should be annealed to increase it's temperature stability, this however does cause some warping (see this video: https://www.youtube.com/watch?v=CZX8eHC7fws&t=141s), there should be a modifier to take care of this
 - Use nuts to screw fan duct and exhaust together
