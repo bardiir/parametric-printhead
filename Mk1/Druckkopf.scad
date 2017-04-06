@@ -1,8 +1,8 @@
 /// --- RENDER SELECTION
 
 render_fan_duct = 0;
-render_exhaust = 0;
-render_top_plate = 1;
+render_exhaust = 1;
+render_top_plate = 0;
 render_supports = 0;
 render_printer_connectorplate = 0;
 
@@ -331,6 +331,18 @@ module exhaust_ring()
             }
         
             cylinder($fn=hole_fn,d=(exhaust_nozzle_clearance*2)+nozzle_diameter,h=exhaust_height);
+            
+            //cutout front
+            translate([-((air_channel_width*2)+heatbrake_depth+(wall_thickness*2))/2-wall_thickness,-((air_channel_width*2)+heatbrake_depth+(wall_thickness*2))/2,0])
+            resize([(air_channel_width*2)+heatbrake_depth+(wall_thickness*2),(air_channel_width*2)+heatbrake_depth+(wall_thickness*2),exhaust_height])
+            rotate([0,0,45])
+            cube();
+            
+            //chamfer front
+            translate([-((air_channel_width*2)+heatbrake_depth+(wall_thickness*2))-wall_thickness,0,-wall_thickness*1.5])
+            resize([(air_channel_width*2)+heatbrake_depth+(wall_thickness*2),(air_channel_width*2)+heatbrake_depth+(wall_thickness*2),(air_channel_width*2)+heatbrake_depth+(wall_thickness*2)])
+            rotate([45,45,0])
+            cube();
         
             translate([0,0,wall_thickness/2])
             cylinder($fn=hole_fn,d=(air_channel_width*2)+heatbrake_depth,h=exhaust_height-(wall_thickness*1.5));
@@ -340,23 +352,18 @@ module exhaust_ring()
             translate([0,-0.5,0])
             cube();
             
-            //cut through border at front to make nozzle fitting easy
-            //translate([-(air_channel_width*2+heatbrake_depth-wall_thickness*2)/2,0,0])
-            //rotate([0,0,45])
-            //resize([10,10,exhaust_height])
-            //translate([-0.5,-0.5,0])
-            //cube();
+            translate([0,0,(exhaust_nozzle_clearance*2)+nozzle_diameter+wall_thickness])
+            sphere(d=((exhaust_nozzle_clearance*2)+nozzle_diameter)*2);
+            
+            translate([0,0,-((exhaust_nozzle_clearance*2)+nozzle_diameter)+wall_thickness*1.5])
+            sphere(d=((exhaust_nozzle_clearance*2)+nozzle_diameter)*2);
         }
         
+        rotate([0,0,3])
         exhaust_spacers();
         
-        rotate([0,0,45])
-        union()
-        {
-            exhaust_spacers();
-        }
-        
-        
+        rotate([0,0,48])
+        exhaust_spacers();
     }
 }
 
@@ -364,13 +371,13 @@ module exhaust_spacers()
 {
     move_radius = exhaust_nozzle_clearance+nozzle_diameter/2;
     
-    translate([-move_radius-wall_thickness,0,wall_thickness*0.5])
+    translate([-move_radius-wall_thickness*0.5,0,wall_thickness*0.5])
     exhaust_spacer();
         
     translate([move_radius,0,wall_thickness*0.5])
     exhaust_spacer();
         
-    translate([0,-move_radius-wall_thickness,wall_thickness*0.5])
+    translate([0,-move_radius-wall_thickness*0.5,wall_thickness*0.5])
     exhaust_spacer();
         
     translate([0,move_radius,wall_thickness*0.5])
