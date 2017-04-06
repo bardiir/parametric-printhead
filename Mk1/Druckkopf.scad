@@ -330,7 +330,11 @@ module exhaust_ring()
                 
             }
         
+            translate([0,0,wall_thickness])
             cylinder($fn=hole_fn,d=(exhaust_nozzle_clearance*2)+nozzle_diameter,h=exhaust_height);
+           
+            translate([0,0,-wall_thickness])
+            cylinder($fn=hole_fn,d=(exhaust_nozzle_clearance*2)+nozzle_diameter+wall_thickness,h=exhaust_height);
             
             //cutout front
             translate([-((air_channel_width*2)+heatbrake_depth+(wall_thickness*2))/2-wall_thickness,-((air_channel_width*2)+heatbrake_depth+(wall_thickness*2))/2,0])
@@ -369,7 +373,7 @@ module exhaust_ring()
 
 module exhaust_spacers()
 {
-    move_radius = exhaust_nozzle_clearance+nozzle_diameter/2;
+    move_radius = exhaust_nozzle_clearance+nozzle_diameter/2+wall_thickness/2;
     
     translate([-move_radius-wall_thickness*0.5,0,wall_thickness*0.5])
     exhaust_spacer();
