@@ -1,17 +1,17 @@
 /// --- RENDER SELECTION
 
-render_fan_duct = 0;
-render_exhaust = 1;
+render_fan_duct = 1;
+render_exhaust = 0;
 render_top_plate = 0;
 render_supports = 0;
 render_printer_connectorplate = 0;
 
 /// --- CALIBRATION VARIABLES
 
-heatbrake_width = 45.5 + 0.5;
-heatbrake_height = 13 + 0.2;
-heatbrake_depth = 15.1 + 0.2;
-heatbrake_sunk_at_mount = 3; //TBD
+heatbrake_width = 45.8 + 0.5;
+heatbrake_height = 12.9 + 0.2;
+heatbrake_depth = 15.8 + 0.2;
+heatbrake_sunk_at_mount = 3;
 
 fan_width = 40 + 0.2;
 fan_screw_distance = 32.3;
@@ -24,7 +24,7 @@ printhead_height = 45.1;
 
 clampscrew_distance_from_heatbrake_end = 44.8;
 clampscrew_diameter = 3 + 0.5 ;
-clampscrew_distance_between = 9.8;
+clampscrew_distance_between = 10.5;
 
 air_channel_width = 7;
 air_channel_from_heatbrake_end = 12.4;
@@ -35,7 +35,7 @@ wall_thickness = 1.8;
 hole_fn = 30;
 
 nozzle_below_heatbrake = 25;
-nozzle_distance_from_heatbrake_end = 59.5 + 3; // Why? 59.5mm Measurement but Testprint is 3mm off. 
+nozzle_distance_from_heatbrake_end = 61.5;
 nozzle_diameter = 7;
 nozzle_distance_from_heatbrake_back = 9.5;
 
