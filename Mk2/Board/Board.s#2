@@ -76,8 +76,8 @@
 <pad name="6" x="9.785" y="-9.59" drill="0.9" diameter="1.4224"/>
 <pad name="7" x="10.705" y="-8.05" drill="0.9" diameter="1.4224"/>
 <pad name="8" x="11.825" y="-9.59" drill="0.9" diameter="1.4224"/>
-<pad name="S@1" x="0.03" y="-9.09" drill="1.6" diameter="2.1844"/>
-<pad name="S@2" x="16.68" y="-9.09" drill="1.6" diameter="2.1844"/>
+<pad name="S1" x="0.03" y="-9.09" drill="1.6" diameter="2.1844"/>
+<pad name="S2" x="16.68" y="-8.89" drill="1.6" diameter="2.1844"/>
 <text x="0.127" y="-18.002" size="1.27" layer="25">&gt;NAME</text>
 <text x="5.175" y="-2.08" size="1.27" layer="27">&gt;VALUE</text>
 <wire x1="0" y1="0" x2="16.7" y2="0" width="0.127" layer="21"/>
@@ -246,8 +246,8 @@
 <connect gate="G$1" pin="6" pad="6"/>
 <connect gate="G$1" pin="7" pad="7"/>
 <connect gate="G$1" pin="8" pad="8"/>
-<connect gate="G$1" pin="S1" pad="S@1"/>
-<connect gate="G$1" pin="S2" pad="S@2"/>
+<connect gate="G$1" pin="S1" pad="S1"/>
+<connect gate="G$1" pin="S2" pad="S2"/>
 </connects>
 <technologies>
 <technology name=""/>
