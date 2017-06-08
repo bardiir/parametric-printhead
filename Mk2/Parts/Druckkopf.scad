@@ -1,7 +1,7 @@
 /// --- RENDER SELECTION
 
-air_thingy();
-//top_plate();
+//air_thingy();
+top_plate();
 render_printer_connectorplate = 0;
 
 /// --- CALIBRATION VARIABLES
@@ -87,7 +87,7 @@ module top_plate() {
         cylinder(d=filament_tube_diameter,h=filament_tube_guide_height,$fn=100);
         
         //board cutout
-        translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness,printhead_height-board_height/2])
+        translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness-board_solder_offset,printhead_height-board_height/2])
         cube([board_width-2,board_depth-board_thickness,board_height]);
         
         //stepper connector cutout
