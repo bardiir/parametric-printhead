@@ -172,7 +172,7 @@ module air_thingy() {
         }
         
         translate([nozzle_distance_from_heatbrake_end-exhaust_nozzle_clearance-nozzle_diameter/2+wall_thickness,-air_channel_width+wall_thickness,-nozzle_below_heatbrake+exhaust_bed_clearance])
-        cube([exhaust_width-wall_thickness,air_channel_width*2+heatbrake_depth-wall_thickness*2,2]);
+        cube([exhaust_width,air_channel_width*2+heatbrake_depth-wall_thickness*2,2]);
     
         //air channel for fan mount
         hull() {
