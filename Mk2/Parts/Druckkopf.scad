@@ -1,7 +1,7 @@
 /// --- RENDER SELECTION
 
-%air_thingy();
-top_plate();
+air_thingy();
+//top_plate();
 render_printer_connectorplate = 0;
 
 /// --- CALIBRATION VARIABLES
@@ -18,8 +18,9 @@ fan_distance_from_center = 7;
 fan_screw_length = 5;
 fan_lip_height = 5;
 
-board_width = 44.8;
+board_width = 45.1;
 board_height = 33;
+board_solder_offset = 2.5;
 board_thickness = 1.7;
 board_depth = 20-board_thickness;
 
@@ -214,13 +215,17 @@ module air_thingy() {
             cube([board_width+wall_thickness*2-wall_thickness*2-2,stepper_motor_depth-fan_width+front_space+heatbrake_depth-wall_thickness*3,1]);
         }
         
+        //board components
+        translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness-board_solder_offset,printhead_height-board_height/2])
+        cube([board_width-2,board_depth-board_thickness,board_height]);
+        
         //board plate
-        translate([heatbrake_width-(board_width+wall_thickness),heatbrake_depth+stepper_motor_depth-board_thickness-wall_thickness,printhead_height-board_height/2])
+        translate([heatbrake_width-(board_width+wall_thickness),heatbrake_depth+stepper_motor_depth-board_thickness-wall_thickness-board_solder_offset,printhead_height-board_height/2])
         cube([board_width,board_thickness,board_height]);
         
-        //board components
-        translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness,printhead_height-board_height/2])
-        cube([board_width-2,board_depth-board_thickness,board_height]);
+        //board solderoffset
+        translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-wall_thickness-board_solder_offset,printhead_height-board_height/2])
+        cube([board_width-2,board_solder_offset,board_height]);
         
         //clamp screw holes
         translate([clampscrew_distance_from_heatbrake_end,(heatbrake_depth-clampscrew_distance_between)/2,heatbrake_height])
@@ -255,10 +260,14 @@ module air_thingy() {
     cylinder($fn=20, d=7, h=nozzle_below_heatbrake);
     
     //board components
-    translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness,printhead_height-board_height/2])
+    translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-board_depth-wall_thickness-board_solder_offset,printhead_height-board_height/2])
     cube([board_width-2,board_depth-board_thickness,board_height]);
     
     //board plate
-    translate([heatbrake_width-(board_width+wall_thickness),heatbrake_depth+stepper_motor_depth-board_thickness-wall_thickness,printhead_height-board_height/2])
+    translate([heatbrake_width-(board_width+wall_thickness),heatbrake_depth+stepper_motor_depth-board_thickness-wall_thickness-board_solder_offset,printhead_height-board_height/2])
     cube([board_width,board_thickness,board_height]);
+    
+    //board solderoffset
+    translate([heatbrake_width-(board_width+wall_thickness)+1,heatbrake_depth+stepper_motor_depth-wall_thickness-board_solder_offset,printhead_height-board_height/2])
+    cube([board_width-2,board_solder_offset,board_height]);
 }
