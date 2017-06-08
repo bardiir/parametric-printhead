@@ -31,7 +31,7 @@ clampscrew_diameter = 3 + 0.5 ;
 clampscrew_distance_between = 10.5;
 
 air_channel_width = 7;
-air_channel_from_heatbrake_end = 12.4;
+air_channel_from_heatbrake_end = 16.4;
 
 front_space = 20;
 
