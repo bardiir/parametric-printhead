@@ -1,7 +1,8 @@
 /// --- RENDER SELECTION
 
 //air_thingy();
-top_plate();
+air_thingy_support();
+//top_plate();
 render_printer_connectorplate = 0;
 
 /// --- CALIBRATION VARIABLES
@@ -35,7 +36,7 @@ air_channel_from_heatbrake_end = 16.4;
 
 front_space = 20;
 
-wall_thickness = 1.8;
+wall_thickness = 1.6;
 
 nozzle_below_heatbrake = 25;
 nozzle_distance_from_heatbrake_end = 61.5;
@@ -99,6 +100,17 @@ module top_plate() {
         cylinder(d=clampscrew_diameter,h=printhead_height,$fn=100);
         translate([clampscrew_distance_from_heatbrake_end,(heatbrake_depth-clampscrew_distance_between)/2+clampscrew_distance_between,heatbrake_height])
         cylinder(d=clampscrew_diameter,h=printhead_height,$fn=100);
+    }
+}
+
+module air_thingy_support()
+{
+    union() {
+    translate([0,-air_channel_width,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    cube([air_channel_from_heatbrake_end-0.4, air_channel_width*2+heatbrake_depth+0.4, heatbrake_height - 0.4 +nozzle_below_heatbrake-exhaust_bed_clearance]);
+    
+    translate([0,heatbrake_depth+air_channel_width+0.4,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    cube([heatbrake_width, stepper_motor_depth-air_channel_width, heatbrake_height - 0.4 +nozzle_below_heatbrake-exhaust_bed_clearance]);
     }
 }
 
