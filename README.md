@@ -22,3 +22,6 @@ There also have been plans to do these:
 
 - Use nuts to screw fan duct and exhaust together  
 -> It's now one part anyway, no need to screw it together, but maybe I'll create a Mk3 version that is screwed if someone can't or doesn't want to print big support structures.
+
+## Future plans
+- Make Exhaust clip-on and easily exchangeable to cater for various nozzle heights without changeing the whole printhead and to make it printable as an extra part, ideally without any supports
