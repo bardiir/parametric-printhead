@@ -107,9 +107,9 @@ module air_thingy_support()
 {
     union() {
     translate([0,-air_channel_width,-nozzle_below_heatbrake+exhaust_bed_clearance])
-    cube([air_channel_from_heatbrake_end-0.4, air_channel_width*2+heatbrake_depth+0.4, heatbrake_height - 0.4 +nozzle_below_heatbrake-exhaust_bed_clearance]);
+    cube([air_channel_from_heatbrake_end-0.4, air_channel_width*2+heatbrake_depth+0.6, heatbrake_height - 0.4 +nozzle_below_heatbrake-exhaust_bed_clearance]);
     
-    translate([0,heatbrake_depth+air_channel_width+0.4,-nozzle_below_heatbrake+exhaust_bed_clearance])
+    #translate([0,heatbrake_depth+air_channel_width+0.6,-nozzle_below_heatbrake+exhaust_bed_clearance])
     cube([heatbrake_width, stepper_motor_depth-air_channel_width, heatbrake_height - 0.4 +nozzle_below_heatbrake-exhaust_bed_clearance]);
     }
 }
